@@ -12,9 +12,8 @@ public class Emprestimo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate retirada;
-    private LocalDate entrega;
-    private Integer dias;
+    private LocalDate dataRetirada;
+    private LocalDate dataDevolucao;
 
     @ManyToOne
    private Livro livro;
@@ -24,11 +23,10 @@ public class Emprestimo {
 
     public Emprestimo() {}
 
-    public Emprestimo(Long id, LocalDate retirada, LocalDate entrega, Integer dias) {
+    public Emprestimo(Long id, LocalDate dataRetirada, LocalDate dataDevolucao) {
         this.id = id;
-        this.retirada = retirada;
-        this.entrega = entrega;
-        this.dias = dias;
+        this.dataRetirada = dataRetirada;
+        this.dataDevolucao = dataDevolucao;
     }
 
     public Long getId() {
@@ -39,28 +37,20 @@ public class Emprestimo {
         this.id = id;
     }
 
-    public LocalDate getRetirada() {
-        return retirada;
+    public LocalDate getDataRetirada() {
+        return dataRetirada;
     }
 
-    public void setRetirada(LocalDate retirada) {
-        this.retirada = retirada;
+    public void setDataRetirada(LocalDate dataRetirada) {
+        this.dataRetirada = dataRetirada;
     }
 
-    public LocalDate getEntrega() {
-        return entrega;
+    public LocalDate getDataDevolucao() {
+        return dataDevolucao;
     }
 
-    public void setEntrega(LocalDate entrega) {
-        this.entrega = entrega;
-    }
-
-    public Integer getDias() {
-        return dias;
-    }
-
-    public void setDias(Integer dias) {
-        this.dias = dias;
+    public void setDataDevolucao(LocalDate dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
     }
 
     public Livro getLivro() {
