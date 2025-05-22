@@ -1,6 +1,7 @@
 package com.jpgedvila.biblioteca.dto;
 
 import com.jpgedvila.biblioteca.entities.Aluno;
+import com.jpgedvila.biblioteca.entities.Professor;
 import com.jpgedvila.biblioteca.entities.Usuario;
 
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ public class UsuarioDTO {
     private String telefone;
     private LocalDate dataDeCadastro;
     private String email;
+    private String tipoUsuario;
 
     public UsuarioDTO() {}
 
@@ -29,6 +31,12 @@ public class UsuarioDTO {
         telefone = usuario.getTelefone();
         dataDeCadastro = usuario.getDataDeCadastro();
         email = usuario.getEmail();
+
+        if (usuario instanceof Aluno) {
+            this.tipoUsuario = "ALUNO";
+        } else if (usuario instanceof Professor) {
+            this.tipoUsuario = "PROFESSOR";
+        }
     }
 
 

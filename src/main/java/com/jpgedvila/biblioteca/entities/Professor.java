@@ -6,4 +6,8 @@ import jakarta.persistence.Entity;
 @Entity
 @DiscriminatorValue("PROFESSOR")
 public class Professor extends Usuario{
+
+    public Professor(){
+        super();
+    }
 }
