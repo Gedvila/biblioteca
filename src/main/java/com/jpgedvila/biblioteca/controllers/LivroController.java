@@ -27,8 +27,8 @@ public class LivroController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping(value = "/{genero}")
-    public ResponseEntity<Page<LivroDTO>> findByGenero(@PathVariable String genero, Pageable pageable) {
+    @GetMapping("/genero")
+    public ResponseEntity<Page<LivroDTO>> findByGenero(@RequestParam String genero, Pageable pageable) {
         Page<LivroDTO> dto = livroService.findByGenero(genero, pageable);
         return ResponseEntity.ok(dto);
     }

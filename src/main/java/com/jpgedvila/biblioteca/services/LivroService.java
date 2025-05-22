@@ -24,15 +24,15 @@ public class LivroService {
     }
 
     @Transactional(readOnly = true)
-    public Page<LivroDTO> findAll(org.springframework.data.domain.Pageable pageable) {
-        Page<Livro> result = (Page<Livro>) repository.findAll();
-        return result.map(x -> new LivroDTO(x));
+    public Page<LivroDTO> findAll(Pageable pageable) {
+        Page<Livro> result = repository.findAll(pageable);
+        return result.map(this::mapToLivroDTO);
     }
 
     @Transactional(readOnly = true)
     public Page<LivroDTO> findByGenero(String genero, Pageable pageable) {
-        Page<Livro> livros = (Page<Livro>) repository.findByGenero(genero, pageable);
-        return livros.map(x -> new LivroDTO());
+        Page<Livro> livros = repository.findByGenero(genero, pageable);
+        return livros.map(this::mapToLivroDTO);
     }
 
     public LivroDTO insertLivro(LivroDTO dto){
