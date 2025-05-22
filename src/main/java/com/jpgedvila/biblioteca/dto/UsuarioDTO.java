@@ -59,4 +59,8 @@ public class UsuarioDTO {
     public String getEmail() {
         return email;
     }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
 }
