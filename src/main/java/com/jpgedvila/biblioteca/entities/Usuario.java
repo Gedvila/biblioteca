@@ -1,6 +1,7 @@
 package com.jpgedvila.biblioteca.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -9,6 +10,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "usuarios")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING)
 public class Usuario {
 
     @Id
@@ -17,9 +20,11 @@ public class Usuario {
     private String nome;
     private String telefone;
 
+    @CreationTimestamp
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private LocalDate dataDeCadastro;
     private String email;
+
     @OneToMany(mappedBy = "usuario")
     private Set<Emprestimo> emprestimos = new HashSet<>();
 
