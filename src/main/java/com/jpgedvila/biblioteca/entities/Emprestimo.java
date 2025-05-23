@@ -1,6 +1,7 @@
 package com.jpgedvila.biblioteca.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -12,6 +13,9 @@ public class Emprestimo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @CreationTimestamp
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private LocalDate dataRetirada;
     private LocalDate dataDevolucao;
 
@@ -59,6 +63,14 @@ public class Emprestimo {
 
     public Usuario getUsuario() {
         return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
     }
 
     @Override
