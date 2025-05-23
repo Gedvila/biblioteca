@@ -8,6 +8,7 @@ import com.jpgedvila.biblioteca.repositories.AlunoRepository;
 import com.jpgedvila.biblioteca.repositories.ProfessorRepository;
 import com.jpgedvila.biblioteca.repositories.UsuarioRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,8 +48,8 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public Page<UsuarioDTO> findAll(org.springframework.data.domain.Pageable pageable) {
-        Page<Usuario> result = usuarioRepository.findAll((org.springframework.data.domain.Pageable) pageable);
+    public Page<UsuarioDTO> findAll(Pageable pageable) {
+        Page<Usuario> result = usuarioRepository.findAll( pageable);
         return result.map(x -> new UsuarioDTO(x));
     }
 

@@ -38,9 +38,15 @@ public class EmprestimoService {
     }
 
     @Transactional(readOnly = true)
+    public Page<EmprestimoDTO> findAtrasados(Pageable pageable) {
+        Page<Emprestimo> result = emprestimoRepository.findAtrasados(pageable);
+        return result.map(EmprestimoDTO::new);
+    }
+
+    @Transactional(readOnly = true)
     public Page<EmprestimoDTO> findAll(Pageable pageable) {
         Page<Emprestimo> result = emprestimoRepository.findAll(pageable);
-        return result.map(x -> new EmprestimoDTO(x));
+        return result.map(EmprestimoDTO::new);
     }
 
     public EmprestimoDTO criarEmprestimo(EmprestimoDTO dto) {
