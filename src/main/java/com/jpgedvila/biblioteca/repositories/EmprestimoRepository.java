@@ -1,6 +1,5 @@
 package com.jpgedvila.biblioteca.repositories;
 
-import com.jpgedvila.biblioteca.dto.EmprestimoDTO;
 import com.jpgedvila.biblioteca.entities.Emprestimo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

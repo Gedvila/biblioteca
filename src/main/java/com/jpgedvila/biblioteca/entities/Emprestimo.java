@@ -18,6 +18,7 @@ public class Emprestimo {
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private LocalDate dataRetirada;
     private LocalDate dataDevolucao;
+    private String status;
 
     @ManyToOne
    private Livro livro;
