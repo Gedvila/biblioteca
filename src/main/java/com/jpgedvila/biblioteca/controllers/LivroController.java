@@ -33,6 +33,12 @@ public class LivroController {
         return ResponseEntity.ok(dto);
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        livroService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping
     public ResponseEntity<LivroDTO> insertLivro(@RequestBody LivroDTO dto){
         dto = livroService.insertLivro(dto);

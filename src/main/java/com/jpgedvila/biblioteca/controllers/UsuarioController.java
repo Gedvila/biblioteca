@@ -35,6 +35,12 @@ public class UsuarioController {
         return ResponseEntity.created(uri).body(dto);
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        usuarioService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping
     public ResponseEntity<Page<UsuarioDTO>> findAll(Pageable pageable) {
         Page<UsuarioDTO> dto = usuarioService.findAll(pageable);

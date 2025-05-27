@@ -47,6 +47,10 @@ public class UsuarioService {
 
     }
 
+    public void delete(Long id){
+        usuarioRepository.deleteById(id);
+    }
+
     @Transactional(readOnly = true)
     public Page<UsuarioDTO> findAll(Pageable pageable) {
         Page<Usuario> result = usuarioRepository.findAll( pageable);

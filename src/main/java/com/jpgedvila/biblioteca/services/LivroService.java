@@ -35,6 +35,10 @@ public class LivroService {
         return livros.map(this::mapToLivroDTO);
     }
 
+    public void delete(Long id){
+        repository.deleteById(id);
+    }
+
     public LivroDTO insertLivro(LivroDTO dto){
 
         Livro entity = new Livro();
