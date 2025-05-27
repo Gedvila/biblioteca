@@ -2,6 +2,7 @@ package com.jpgedvila.biblioteca.controllers;
 
 import com.jpgedvila.biblioteca.dto.LivroDTO;
 import com.jpgedvila.biblioteca.dto.UsuarioDTO;
+import com.jpgedvila.biblioteca.entities.Livro;
 import com.jpgedvila.biblioteca.services.LivroService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,18 @@ public class LivroController {
     @GetMapping
     public ResponseEntity<Page<LivroDTO>> findAll(Pageable pageable) {
         Page<LivroDTO> dto = livroService.findAll(pageable);
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/disponivel")
+    public ResponseEntity<Page<LivroDTO>> findDisponivel(Pageable pageable){
+        Page<LivroDTO> dtos = livroService.findDisponivel(pageable);
+        return ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping("/autor")
+    public ResponseEntity<Page<LivroDTO>> findByAutor(@RequestParam String autor, Pageable pageable){
+        Page<LivroDTO> dto = livroService.findByAutor(autor, pageable);
         return ResponseEntity.ok(dto);
     }
 

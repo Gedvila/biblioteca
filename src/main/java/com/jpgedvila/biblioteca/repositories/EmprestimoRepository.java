@@ -12,4 +12,7 @@ public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long> {
     Page<Emprestimo> findAtrasados(Pageable pageable);
 
     Page<Emprestimo> findAll(Pageable pageable);
+
+    @Query("SELECT obj FROM Emprestimo obj WHERE obj.status = 'ATIVO'")
+    Page<Emprestimo> findByAtivos(Pageable pageable);
 }

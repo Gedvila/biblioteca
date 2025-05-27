@@ -35,6 +35,18 @@ public class LivroService {
         return livros.map(this::mapToLivroDTO);
     }
 
+    @Transactional(readOnly = true)
+    public Page<LivroDTO> findDisponivel(Pageable pageable){
+        Page<Livro> livros = repository.findDisponivel(pageable);
+        return livros.map((this::mapToLivroDTO));
+    }
+
+    @Transactional(readOnly = true)
+    public Page<LivroDTO> findByAutor(String autor, Pageable pageable){
+        Page<Livro> livros = repository.findByAutor(autor, pageable);
+        return livros.map(this::mapToLivroDTO);
+    }
+
     public void delete(Long id){
         repository.deleteById(id);
     }

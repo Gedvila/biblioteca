@@ -64,6 +64,11 @@ public class EmprestimoService {
         return new EmprestimoDTO(emprestimo);
     }
 
+    public Page<EmprestimoDTO> findByAtivo(Pageable pageable){
+        Page<Emprestimo> emprestimos = emprestimoRepository.findByAtivos(pageable);
+        return emprestimos.map(EmprestimoDTO::new);
+    }
+
     public EmprestimoDTO criarEmprestimo(EmprestimoDTO dto) {
         Livro livro = livroRepository.findById(dto.getIdLivro()).orElseThrow(
                 (() -> new RuntimeException("Livro não encontrado com ID: " + dto.getIdLivro()))
