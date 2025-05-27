@@ -54,7 +54,7 @@ Certifique-se de ter as seguintes ferramentas instaladas:
 Durante o desenvolvimento, o banco de dados H2 é usado em memória. Você pode acessá-lo para visualizar os dados e executar queries.
 
 * Abra seu navegador e acesse: `http://localhost:8080/h2-console`
-* **JDBC URL:** `jdbc:h2:mem:biblioteca` (ou o que estiver configurado no seu `application.properties`)
+* **JDBC URL:** `jdbc:h2:file:./src/main/resources/banco` (ou o que estiver configurado no seu `application.properties`)
 * **Usuário:** `sa`
 * **Senha:** (deixe em branco)
 * Clique em "Connect".
@@ -67,23 +67,59 @@ A API está acessível na porta `8080`.
 
 | Método | Endpoint        | Descrição                                                                                                                                                                                                                           | Requisição (Body JSON)                                                                                                                                                   | Resposta (Exemplo JSON)                                                                                                                                                                                                                                                           |
 |:-------|:----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `POST` | `/livro`        | Cadastra um novo livro.                                                                                                                                                                                                             | ```json { "titulo": "O Senhor dos Anéis", "autor": "J.R.R. Tolkien", "editora": "HarperCollins", "anoDePublicacao": 1954, "genero": "Fantasia", "disponivel": true } ``` | ```json { "id": 1, "titulo": "O Senhor dos Anéis", "autor": "J.R.R. Tolkien", "editora": "HarperCollins", "anoDePublicacao": 1954, "genero": "Fantasia", "disponivel": true } ``` (Status 201 Created)                                                                            |
+| `POST` | `/livro`        | Cadastra um novo livro.                                                                                                                                                                                                             | ```json { "titulo": "O Senhor dos Anéis", "autor": "J.R.R. Tolkien", "editora": "HarperCollins", "anoDePublicacao": 1954, "genero": "Fantasia", "disponivel": true } ``` | ```json {"titulo": "O Senhor dos Anéis", "autor": "J.R.R. Tolkien", "editora": "HarperCollins", "anoDePublicacao": 1954, "genero": "Fantasia", "disponivel": true } ``` (Status 201 Created)                                                                            |
 | `GET`  | `/livro`        | Lista todos os livros com paginação. <br> Parâmetros de consulta: `page`, `size`, `sort` (ex: `?page=0&size=10&sort=titulo,asc`)                                                                                                    | N/A                                                                                                                                                                      | ```json { "content": [ { "id": 1, "titulo": "O Senhor dos Anéis", "autor": "J.R.R. Tolkien", "editora": "HarperCollins", "anoDePublicacao": 1954, "genero": "Fantasia", "disponivel": true } ], "pageable": { ... }, "last": true, "totalPages": 1, "totalElements": 1, ... } ``` |
 | `GET`  | `/livro/{id}`   | Busca um livro pelo seu ID.                                                                                                                                                                                                         | N/A                                                                                                                                                                      | ```json { "id": 1, "titulo": "O Senhor dos Anéis", "autor": "J.R.R. Tolkien", "editora": "HarperCollins", "anoDePublicacao": 1954, "genero": "Fantasia", "disponivel": true } ``` (Status 200 OK) <br> ou Status 404 Not Found se não existir.                                    |
-| `GET`  | `/livro/genero` | Lista livros por gênero, onde a primeira letra do parâmetro deve ser obrigatoriamente maiúscula. <br> Parâmetro de consulta: `genero` (obrigatório) e `page`, `size`, `sort` (opcionais). <br> Ex: `?genero=Fantasia&page=0&size=5` | N/A                                                                                                                                                                      | ```json { "content": [ { "id": 1, "titulo": "O Hobbit", "genero": "Fantasia", ... } ], "pageable": { ... } } ``` (Status 200 OK)                                                                                                                                                  |
+| `GET`  | `/livro/genero` | Lista livros por gênero, onde a primeira letra do parâmetro deve ser obrigatoriamente maiúscula. <br> Parâmetro de consulta: `genero` (obrigatório) e `page`, `size`, `sort` (opcionais). <br> Ex: `?genero=Fantasia&page=0&size=5` | N/A                                                                                                                                                                      | ```json { "content": [ { "id": 1, "titulo": "O Hobbit", "genero": "Fantasia", ... } ], "page": { ... } } ``` (Status 200 OK)|
+|`DELETE`|`/livro/{id}`|
+
+#### Modelo de Json
+```
+ {
+      "titulo": "O Senhor dos Anéis",
+      "autor": "J.R.R. Tolkien",
+      "editora": "HarperCollins",
+      "anoDePublicacao": 1954,
+      "genero": "Fantasia",
+      "disponivel": true
+}
+```
 
 ### 👤 Usuários (`/usuario`)
 
 | Método | Endpoint             | Descrição                          | Requisição (Body JSON)                                                                | Resposta (Exemplo JSON)                                                                             |
 |:-------|:---------------------|:-----------------------------------|:--------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------|
-| `POST` | `/usuario/aluno`     | Cria um usuário do tipo aluno      | ``` json { "nome": "João", "telefone": "62999908787", "email": "joao@gmail.com" } ``` | ```json  { "nome": "João", "telefone": "62999908787", "email": "joao@gmail.com" }```(Status 200 OK) |
-| `POST` | `/usuario/professor` | Cria um usuário do tipo professor  | ```json { "nome": "João", "telefone": "62999908787", "email": "joao@gmail.com" } ```  | ```json { "nome": "João", "telefone": "62999908787", "email": "joao@gmail.com" }``` (Status 200 OK) | 
-| `GET`  | `/usuario`           | Lista todos os usuários do sistema |
+| `POST` | `/usuario/aluno`     | Cria um usuário do tipo aluno      | ``` json { "nome": "João", "telefone": "62999908787", "email": "joao@gmail.com" } ``` | ```json  { "id": 1,"nome": "João", "telefone": "62999908787", "email": "joao@gmail.com","tipo_usuario": "ALUNO"}```(Status 200 OK) |
+| `POST` | `/usuario/professor` | Cria um usuário do tipo professor  | ```json { "nome": "João", "telefone": "62999908787", "email": "joao@gmail.com" } ```  | ```json { "id": 1,"nome": "João", "telefone": "62999908787", "email": "joao@gmail.com","tipo_usuario": "PROFESSOR"  }``` (Status 200 OK) | 
+| `GET`  | `/usuario`           | Lista todos os Usuarios com paginação. <br> Parâmetros de consulta: `page`, `size`, `sort` (ex: `?page=0&size=10&sort=titulo,asc`) | N/A |  ```json "content": [{"id": 1,"nome": "João", "telefone": "62999908787", "email": "joao@gmail.com","tipo_usuario": "PROFESSOR"...}], "page":{...} ```|
+| `GET`  | `/usuario/{id}`           | Busca o usuário por seu ID | N/A |  ```json { "id": 1,"nome": "João", "telefone": "62999908787", "email": "joao@gmail.com","tipo_usuario": "PROFESSOR" } ```|
+|`DELETE`|`/usuario/{id}`|
 
+#### Modelo de Json
 ```
 {
  "nome": "João",
  "telefone": "62999908787",
  "email": "joao@gmail.com"
+}
+```
+
+### 📁 Emprestimos (`/emprestimo`)
+
+| Método | Endpoint             | Descrição                          | Requisição (Body JSON)                                                                | Resposta (Exemplo JSON)                                                                             |
+|:-------|:---------------------|:-----------------------------------|:--------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------|
+|`GET`   |`/emprestimo`|   Lista todos os Emprestimos com paginação. <br> Parâmetros de consulta: `page`, `size`, `sort` (ex: `?page=0&size=10&sort=titulo,asc`) | N/A| ```json {"content":[{"id":1,"dataRetirada":"2025-05-23","dataDevolucao":"2025-07-03"...],"page":{...}```(Status 200 OK)|
+|`GET`|`/emprestimo/{id}`|
+|`GET`|`/emprestimo/ativo`|
+|`GET`|`/emprestimo/atrasados`|
+|`PUT`|`/emprestimo/devolucao{id}`|
+|`POST`|`/emprestimo`|
+
+#### Modelo de Json
+```
+{
+      "dataDevolucao": "2025-07-03",
+      "idLivro": 1,
+      "idUsuario": 1,
 }
 ```
