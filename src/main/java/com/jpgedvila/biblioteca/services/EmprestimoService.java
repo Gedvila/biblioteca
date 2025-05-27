@@ -49,6 +49,21 @@ public class EmprestimoService {
         return result.map(EmprestimoDTO::new);
     }
 
+    public EmprestimoDTO registrarDevolucao(Long id) {
+        Emprestimo emprestimo = emprestimoRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Emprestimo não encontrado"));
+
+        Livro livro = emprestimo.getLivro();
+
+        emprestimo.setStatus("DEVOLVIDO");
+        livro.setDisponivel(true);
+
+        emprestimoRepository.save(emprestimo);
+        livroRepository.save(livro);
+
+        return new EmprestimoDTO(emprestimo);
+    }
+
     public EmprestimoDTO criarEmprestimo(EmprestimoDTO dto) {
         Livro livro = livroRepository.findById(dto.getIdLivro()).orElseThrow(
                 (() -> new RuntimeException("Livro não encontrado com ID: " + dto.getIdLivro()))
@@ -67,6 +82,7 @@ public class EmprestimoService {
         emprestimo.setDataDevolucao(dto.getDataDevolucao());
         emprestimo.setLivro(livro);
         emprestimo.setUsuario(usuario);
+        emprestimo.setStatus("ATIVO");
 
         emprestimoRepository.save(emprestimo);
 

@@ -28,7 +28,7 @@ public class Emprestimo {
 
     public Emprestimo() {}
 
-    public Emprestimo(Long id, LocalDate dataRetirada, LocalDate dataDevolucao) {
+    public Emprestimo(Long id, LocalDate dataRetirada, LocalDate dataDevolucao,String status) {
         this.id = id;
         this.dataRetirada = dataRetirada;
         this.dataDevolucao = dataDevolucao;
@@ -72,6 +72,14 @@ public class Emprestimo {
 
     public void setLivro(Livro livro) {
         this.livro = livro;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

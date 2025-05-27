@@ -31,6 +31,12 @@ public class EmprestimoController {
         return ResponseEntity.ok().body(dto);
     }
 
+    @PutMapping("/devolucao/{id}")
+    public ResponseEntity<EmprestimoDTO> registrarDevolucao(@PathVariable Long id){
+        EmprestimoDTO dto = emprestimoService.registrarDevolucao(id);
+        return ResponseEntity.ok().body(dto);
+    }
+
     @GetMapping
     public ResponseEntity<Page<EmprestimoDTO>> findAll(Pageable pageable) {
         Page<EmprestimoDTO> dto = emprestimoService.findAll(pageable);

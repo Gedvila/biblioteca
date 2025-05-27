@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long> {
 
-    @Query("SELECT obj FROM Emprestimo obj WHERE obj.dataDevolucao < CURRENT_DATE ")
+    @Query("SELECT obj FROM Emprestimo obj WHERE obj.dataDevolucao < CURRENT_DATE AND obj.status != 'DEVOLVIDO'")
     Page<Emprestimo> findAtrasados(Pageable pageable);
 
     Page<Emprestimo> findAll(Pageable pageable);
