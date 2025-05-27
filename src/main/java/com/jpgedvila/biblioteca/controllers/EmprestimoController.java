@@ -31,7 +31,7 @@ public class EmprestimoController {
         return ResponseEntity.ok().body(dto);
     }
 
-    @GetMapping("/atrasados")
+    @GetMapping("/atrasado")
     public ResponseEntity<Page<EmprestimoDTO>> findAtrasados(Pageable pageable) {
         Page<EmprestimoDTO> dto = emprestimoService.findAtrasados(pageable);
         return ResponseEntity.ok().body(dto);
