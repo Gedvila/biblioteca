@@ -8,8 +8,9 @@ Este projeto implementa uma API RESTful para gerenciamento de uma biblioteca, pe
 * **Spring Boot 3.4.5**
 * **Spring Data JPA**
 * **Hibernate**
-* **H2 Database** (para desenvolvimento e testes, dados voláteis)
-* **Maven** (Gerenciador de Dependências)
+* **H2 Database** 
+* **Maven**
+* **Postman**
 
 ## ✨ Funcionalidades
 
