@@ -6,6 +6,7 @@ public class LivroDTO {
 
     private Long id;
     private String titulo;
+    private Long isbn;
     private String autor;
     private String editora;
     private Integer anoDePublicacao;
@@ -14,7 +15,7 @@ public class LivroDTO {
 
     public LivroDTO(){}
 
-    public LivroDTO(Long id, String titulo, String autor, String editora, Integer anoDePublicacao, String genero, Boolean disponivel) {
+    public LivroDTO(Long id, String titulo, String autor, String editora, Integer anoDePublicacao, String genero, Boolean disponivel, Long isbn) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
@@ -22,6 +23,7 @@ public class LivroDTO {
         this.anoDePublicacao = anoDePublicacao;
         this.genero = genero;
         this.disponivel = disponivel;
+        this.isbn = isbn;
     }
 
     public LivroDTO(Livro livro) {
@@ -32,6 +34,7 @@ public class LivroDTO {
         anoDePublicacao = livro.getAnoDePublicacao();
         genero = livro.getGenero();
         disponivel = livro.getDisponivel();
+        isbn = livro.getIsbn();
     }
 
     public Long getId() {
@@ -60,5 +63,9 @@ public class LivroDTO {
 
     public Boolean getDisponivel() {
         return disponivel;
+    }
+
+    public Long getIsbn() {
+        return isbn;
     }
 }

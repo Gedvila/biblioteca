@@ -70,6 +70,7 @@ public class LivroService {
         entity.setAnoDePublicacao(dto.getAnoDePublicacao());
         entity.setGenero(dto.getGenero());
         entity.setDisponivel(dto.getDisponivel());
+        entity.setIsbn(dto.getIsbn());
     }
 
     private LivroDTO mapToLivroDTO(Livro livro) {
@@ -80,7 +81,8 @@ public class LivroService {
                 livro.getEditora(),
                 livro.getAnoDePublicacao(),
                 livro.getGenero(),
-                livro.getDisponivel()
+                livro.getDisponivel(),
+                livro.getIsbn()
         );
     }
 }

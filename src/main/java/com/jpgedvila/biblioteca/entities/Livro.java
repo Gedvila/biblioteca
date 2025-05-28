@@ -14,6 +14,7 @@ public class Livro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titulo;
+    private Long isbn;
     private String autor;
     private String editora;
     private Integer anoDePublicacao;
@@ -26,7 +27,7 @@ public class Livro {
 
     public Livro() {}
 
-    public Livro(Long id, String titulo, String autor, String editora, Integer anoDePublicacao, String genero, Boolean disponivel) {
+    public Livro(Long id, String titulo, String autor, String editora, Integer anoDePublicacao, String genero, Boolean disponivel, Long isbn) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
@@ -34,6 +35,7 @@ public class Livro {
         this.anoDePublicacao = anoDePublicacao;
         this.genero = genero;
         this.disponivel = disponivel;
+        this.isbn = isbn;
     }
 
     public Long getId() {
@@ -92,6 +94,13 @@ public class Livro {
         this.disponivel = disponivel;
     }
 
+    public Long getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(Long isbn) {
+        this.isbn = isbn;
+    }
 
     public void setEmprestimos(Set<Emprestimo> emprestimos) {
         this.emprestimos = emprestimos;
