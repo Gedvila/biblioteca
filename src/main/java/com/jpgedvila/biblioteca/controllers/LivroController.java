@@ -22,6 +22,13 @@ public class LivroController {
         this.livroService = livroService;
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<LivroDTO> findById(@PathVariable Long id) {
+        LivroDTO livroDTO = livroService.findById(id);
+        return ResponseEntity.ok().body(livroDTO);
+    }
+
+
     @GetMapping
     public ResponseEntity<Page<LivroDTO>> findAll(Pageable pageable) {
         Page<LivroDTO> dto = livroService.findAll(pageable);
