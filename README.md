@@ -8,8 +8,9 @@ Este projeto implementa uma API RESTful para gerenciamento de uma biblioteca, pe
 * **Spring Boot 3.4.5**
 * **Spring Data JPA**
 * **Hibernate**
-* **H2 Database** (para desenvolvimento e testes, dados voláteis)
-* **Maven** (Gerenciador de Dependências)
+* **H2 Database** 
+* **Maven**
+* **Postman**
 
 ## ✨ Funcionalidades
 
@@ -71,7 +72,7 @@ A API está acessível na porta `8080`.
 | `GET`  | `/livro`        | Lista todos os livros com paginação. <br> Parâmetros de consulta: `page`, `size`, `sort` (ex: `?page=0&size=10&sort=titulo,asc`)                                                                                                    | N/A                                                                                                                                                                      | ```json { "content": [ { "id": 1, "titulo": "O Senhor dos Anéis", "autor": "J.R.R. Tolkien", "editora": "HarperCollins", "anoDePublicacao": 1954, "genero": "Fantasia", "disponivel": true } ], "pageable": { ... }, "last": true, "totalPages": 1, "totalElements": 1, ... } ``` |
 | `GET`  | `/livro/{id}`   | Busca um livro pelo seu ID.                                                                                                                                                                                                         | N/A                                                                                                                                                                      | ```json { "id": 1, "titulo": "O Senhor dos Anéis", "autor": "J.R.R. Tolkien", "editora": "HarperCollins", "anoDePublicacao": 1954, "genero": "Fantasia", "disponivel": true } ``` (Status 200 OK) <br> ou Status 404 Not Found se não existir.                                    |
 | `GET`  | `/livro/genero` | Lista livros por gênero, onde a primeira letra do parâmetro deve ser obrigatoriamente maiúscula. <br> Parâmetro de consulta: `genero` (obrigatório) e `page`, `size`, `sort` (opcionais). <br> Ex: `?genero=Fantasia&page=0&size=5` | N/A                                                                                                                                                                      | ```json { "content": [ { "id": 1, "titulo": "O Hobbit", "genero": "Fantasia", ... } ], "page": { ... } } ``` (Status 200 OK)|
-|`DELETE`|`/livro/{id}`|
+|`DELETE`|`/livro/{id}`| Exclui um livro pelo ID| N/A | (Status 204 NO CONTENT)
 
 #### Modelo de Json
 ```
@@ -93,7 +94,7 @@ A API está acessível na porta `8080`.
 | `POST` | `/usuario/professor` | Cria um usuário do tipo professor  | ```json { "nome": "João", "telefone": "62999908787", "email": "joao@gmail.com" } ```  | ```json { "id": 1,"nome": "João", "telefone": "62999908787", "email": "joao@gmail.com","tipo_usuario": "PROFESSOR"  }``` (Status 200 OK) | 
 | `GET`  | `/usuario`           | Lista todos os Usuarios com paginação. <br> Parâmetros de consulta: `page`, `size`, `sort` (ex: `?page=0&size=10&sort=titulo,asc`) | N/A |  ```json "content": [{"id": 1,"nome": "João", "telefone": "62999908787", "email": "joao@gmail.com","tipo_usuario": "PROFESSOR"...}], "page":{...} ```|
 | `GET`  | `/usuario/{id}`           | Busca o usuário por seu ID | N/A |  ```json { "id": 1,"nome": "João", "telefone": "62999908787", "email": "joao@gmail.com","tipo_usuario": "PROFESSOR" } ```|
-|`DELETE`|`/usuario/{id}`|
+|`DELETE`|`/usuario/{id}`| Exclui um usuario pelo ID| N/A | (Status 204 NO CONTENT)
 
 #### Modelo de Json
 ```
@@ -109,17 +110,16 @@ A API está acessível na porta `8080`.
 | Método | Endpoint             | Descrição                          | Requisição (Body JSON)                                                                | Resposta (Exemplo JSON)                                                                             |
 |:-------|:---------------------|:-----------------------------------|:--------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------|
 |`GET`   |`/emprestimo`|   Lista todos os Emprestimos com paginação. <br> Parâmetros de consulta: `page`, `size`, `sort` (ex: `?page=0&size=10&sort=titulo,asc`) | N/A| ```json {"content":[{"id":1,"dataRetirada":"2025-05-23","dataDevolucao":"2025-07-03"...],"page":{...}```(Status 200 OK)|
-|`GET`|`/emprestimo/{id}`|
-|`GET`|`/emprestimo/ativo`|
-|`GET`|`/emprestimo/atrasados`|
-|`PUT`|`/emprestimo/devolucao{id}`|
-|`POST`|`/emprestimo`|
-
+|`GET`|`/emprestimo/{id}`| Busca o Emprestimo pelo ID | N/A| | ```json{"id":1,"dataRetirada":"2025-05-23","dataDevolucao":"2025-07-03","idLivro":1,"idUsuario":1,"status":"DEVOLVIDO"}``` (Status 200 OK)|
+|`GET`|`/emprestimo/ativo`| Lista todos os Emprestimos com o status de `ATIVO`| N/A| ``` json {"content":[{"id":1,"dataRetirada":"2025-05-23","dataDevolucao":"2025-07-03"...],"page":{...}``` (Status 200 OK)| 
+|`GET`|`/emprestimo/atrasados`| Lista todos os Emprestimos com a data de devolução anteriores ao dia atual | N/A| ```json {"content":[{"id":1,"dataRetirada":"2025-05-23","dataDevolucao":"2025-07-03"...],"page":{...}``` (Status 200 OK)|
+|`PUT`|`/emprestimo/devolucao{id}`| Registra a devolução de um Livro mudando a sua disponibilidade e o status do Emprestimo| N/A |  ``` json{"id":1,"dataRetirada":"2025-05-23","dataDevolucao":"2025-07-03","idLivro":1,"idUsuario":1,"status":"DEVOLVIDO"}``` (Status 200 OK)|
+|`POST`|`/emprestimo`| Registra um novo emprestimo | ```json {"dataDevolucao": "2025-02-11", "idLivro": 2,"idUsuario": 2```| ```json { "id": 2,"dataRetirada": "2025-05-27", "dataDevolucao": "2025-07-03", "idLivro": 2, "idUsuario": 4, "status": "ATIVO"}``` (Status 200 OK)|
 #### Modelo de Json
 ```
 {
       "dataDevolucao": "2025-07-03",
       "idLivro": 1,
-      "idUsuario": 1,
+      "idUsuario": 1
 }
 ```
