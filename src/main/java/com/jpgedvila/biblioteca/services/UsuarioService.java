@@ -24,6 +24,14 @@ public class UsuarioService {
         this.professorRepository = professorRepository;
     }
 
+    public UsuarioDTO getById(Long id){
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Usuário não encontrado")
+        );
+        return new UsuarioDTO(usuario);
+    }
+
     @Transactional
     public UsuarioDTO insertAluno(UsuarioDTO dto){
         Aluno entity = new Aluno();

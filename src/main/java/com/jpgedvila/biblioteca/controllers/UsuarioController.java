@@ -27,6 +27,12 @@ public class UsuarioController {
         return ResponseEntity.created(uri).body(dto);
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<UsuarioDTO> findbyId(@PathVariable Long id){
+        UsuarioDTO dto = usuarioService.getById(id);
+        return ResponseEntity.ok().body(dto);
+    }
+
     @PostMapping("/professor")
     public ResponseEntity<UsuarioDTO> cadastrarProfessor(@RequestBody UsuarioDTO dto){
         dto = usuarioService.insertProfessor(dto);
